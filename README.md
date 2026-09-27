@@ -1,6 +1,6 @@
-# overstrik3
+# u00f8
 
-Personal site of overstrik3, ASCII / textmode artist. Hand-written static HTML
+Personal site of u00f8 (U+00F8, the slashed o), ASCII / textmode artist. Hand-written static HTML
 and one stylesheet. No JavaScript, no images, no build step, no dependencies.
 
 Open `index.html` directly, or serve the folder:
