@@ -1,0 +1,153 @@
+/* overstrik3 — the only stylesheet.
+   Grid: 12px IBM Plex Mono on 24px lines. Every vertical space is a
+   multiple of 24px, which also keeps every link a 24px tap target.
+   The bitmap font is drawn only at whole multiples of its 20px cell:
+   40px for the mark, 20px for rules and works. Pixel font PxPlus IBM XGA-AI 12x20 is
+   drawn ONLY at whole multiples of its 20px cell: 20px (works, rules)
+   and 40px (mark). Never relative sizes on it, never clamp(). */
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PxPlus IBM XGA-AI 12x20";
+  src: url("fonts/PxPlus_IBM_XGA-AI_12x20.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  color-scheme: dark;
+  background: #000000;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 48px 24px 48px 48px;
+  background: #000000;
+  color: #ffffff;
+  font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 2;
+}
+
+/* one narrow column, pinned to the left margin */
+header, main, footer {
+  max-width: 72ch;
+}
+
+h1, h2, p, ul, pre {
+  margin: 0 0 24px;
+}
+h1, h2 {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li > a {
+  display: inline-block; /* full line as pointer target */
+}
+
+/* links: underline at rest, inversion on hover and focus */
+a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+a:hover,
+a:focus-visible {
+  background: #ffffff;
+  color: #000000;
+  text-decoration: none;
+  outline: none;
+}
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* the pixel font, always at an integer multiple of its 20px cell */
+.logo, .rule, .art {
+  font-family: "PxPlus IBM XGA-AI 12x20", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-weight: 400;
+  font-kerning: none;
+  font-variant-ligatures: none;
+  letter-spacing: 0;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  image-rendering: pixelated;
+}
+
+/* mark: the slashed zero at 40px = two cells tall */
+.logo {
+  display: inline-block;
+  font-size: 40px;
+  line-height: 48px;
+  text-decoration: none;
+  margin: 0 0 24px;
+}
+
+/* text rules: a row of box-drawing dashes, clipped to the column */
+.rule {
+  font-size: 20px;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* works: real text, 20px cell, no leading so blocks tile seamlessly.
+   Every piece has a row count divisible by 6 (6 × 20px = 5 × 24px).
+   A piece is not text to read, so it ignores the 72ch measure and takes
+   the width it needs, up to the window less the body padding. Only a
+   piece wider than the window itself scrolls, inside its own box. */
+.art {
+  font-size: 20px;
+  line-height: 20px;
+  white-space: pre;
+  width: max-content;
+  max-width: calc(100vw - 96px);
+  overflow-x: auto;
+  tab-size: 8;
+}
+.art:focus-visible {
+  outline: none;
+  background: #ffffff;
+  color: #000000;
+}
+
+.meta {
+  margin-top: -24px;
+}
+
+/* responsive by subtraction: only the padding changes */
+@media (max-width: 40em) {
+  body {
+    padding: 24px;
+  }
+  .art {
+    max-width: calc(100vw - 48px);
+  }
+}
